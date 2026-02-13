@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Promise For You</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary-pink: #ffafbd;
+            --accent-red: #d63031;
+            --text-color: #2d3436;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            max-width: 550px;
+            width: 90%;
+            z-index: 10;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        h1 { color: var(--accent-red); font-size: 1.8rem; margin-bottom: 10px; }
+        h2 { color: #636e72; font-weight: normal; font-size: 1.3rem; }
+
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            height: 60px;
+        }
+
+        button {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+            touch-action: manipulation;
+        }
+
+        #yesBtn {
+            background-color: var(--accent-red);
+            color: white;
+            box-shadow: 0 4px 15px rgba(214, 48, 49, 0.3);
+        }
+
+        #noBtn {
+            background-color: #b2bec3;
+            color: white;
+            position: absolute;
+            transition: 0.1s ease;
+            z-index: 999;
+        }
+
+        #celebration { display: none; animation: fadeIn 1.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .couple-photo {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 15px;
+            border: 6px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .letter-content {
+            text-align: left;
+            line-height: 1.8;
+            color: var(--text-color);
+            background: #fffafa;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #fab1a0;
+            font-size: 1rem;
+            white-space: pre-line; /* Keeps your formatting */
+        }
+
+        .cat-gif { width: 110px; margin-top: 15px; border-radius: 10px; }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .letter-content { font-size: 0.95rem; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgm" loop>
+        <source src="https://www.myinstants.com/media/sounds/arctic-monkeys-i-wanna-be-yours-official-audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="mainCard">
+        <div id="questionArea">
+            <h1>Hi kunjusee❤️</h1>
+            <h2>Will you be my Valentine?</h2>
+            <div class="btn-container">
+                <button id="yesBtn" onclick="showLove()">Yes!</button>
+                <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            </div>
+        </div>
+
+        <div id="celebration">
+            <h1>I Knew You'd Say Yes! 💖</h1>
+            
+            <img src="our-photo.jpg" alt="Us Together" class="couple-photo">
+            
+            <div class="letter-content">
+My Dear Aparna
+I don’t ask for the world, I don’t ask for perfection… I only ask for one promise from you — that no matter what life brings, we choose each other every single day.
+
+Promise me that when days get heavy, we won’t let go. Promise me that even in silence, our hearts will still speak. Promise me that this love we hold so gently will always be protected by both of us.
+
+I promise you the same — my loyalty, my patience, my effort, and a love that doesn’t fade with time. Let’s promise to stay, to fight for us, and to grow together.
+
+Because with you, love feels like home. ❤️
+You are the most beautiful person I know, inside and out. I want to be yours forever, just like the song says.
+
+<strong>Always yours, Pranav </strong>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 15px;">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KztT2c4u8mYYUiMKdJ/giphy.gif" class="cat-gif">
+                <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" class="cat-gif">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            // Keeps button movement within the visible screen area
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            noBtn.style.position = 'fixed';
+        }
+
+        function showLove() {
+            const music = document.getElementById('bgm');
+            music.play().catch(e => console.log("Audio play failed, needs interaction"));
+            
+            document.getElementById('questionArea').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            
+            // Heart-colored confetti
+            var end = Date.now() + (5 * 1000);
+            (function frame() {
+                confetti({
+                    particleCount: 2,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#d63031', '#fd79a8']
+                });
+                confetti({
+                    particleCount: 2,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#d63031', '#fd79a8']
+                });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    </script>
+</body>
+</html>
